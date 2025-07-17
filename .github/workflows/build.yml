@@ -51,29 +51,3 @@ jobs:
             ${{github.workspace}}/build/boot.img.sha256sum
             ${{github.workspace}}/build/rootfs.img.zst.sha256sum
             ${{github.workspace}}/linux/arch/arm64/boot/Image.gz
-      - name: Create release
-        uses: softprops/action-gh-release@v1
-        if: github.ref == 'refs/heads/master'
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        with:
-          body: ${{env.RELEASE}}
-          tag_name: ${{env.RELEASE}}
-          draft: false
-          prerelease: false
-          files: |
-            ${{github.workspace}}/build/aboot.img
-            ${{github.workspace}}/build/boot.img
-            ${{github.workspace}}/build/rootfs.img.zst
-            ${{github.workspace}}/build/aboot.img.sha256sum
-            ${{github.workspace}}/build/boot.img.sha256sum
-            ${{github.workspace}}/build/rootfs.img.zst.sha256sum
-
-      - name: Delete old releases
-        uses: dev-drprasad/delete-older-releases@v0.2.0
-        if: github.ref == 'refs/heads/master'
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        with:
-          keep_latest: 1
-          delete_tags: true
